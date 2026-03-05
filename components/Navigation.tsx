@@ -22,7 +22,7 @@ export default function Navigation() {
   const [activeId,     setActiveId]     = useState<string | null>(null);
   const [scrolled,     setScrolled]     = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -128,7 +128,7 @@ export default function Navigation() {
           top: calc(100% + 10px);
           left: 50%;
           transform: translateX(-50%) translateY(-8px);
-          width: 680px;
+          width: 800px;
           background: var(--surface);
           border: 1px solid var(--border);
           border-radius: 18px;
