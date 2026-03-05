@@ -346,7 +346,7 @@ export default function Navigation() {
               </svg>
             </div>
             <div className="logo-text">
-              <span className="logo-primary">EduCMS</span>
+              <span className="logo-primary">Computing Nexus CMS</span>
               <span className="logo-sub">Content Studio</span>
             </div>
           </Link>
