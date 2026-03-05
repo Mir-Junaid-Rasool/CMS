@@ -13,7 +13,7 @@ const courses = [
   { id: "java",  name: "Java",                icon: "☕", color: "#ED8B00", tag: "Backend"     },
   { id: "c",     name: "C Programming",       icon: "⚙️", color: "#A8B9CC", tag: "Systems"    },
   { id: "se",    name: "Software Engineering",icon: "🏗️", color: "#B794F4", tag: "Process"    },
-  {id: "dev",    name: "DevOps",    icon: "🧠", color: "#FF6B6B", tag: "DevOps"},
+   { id: "dev",   name: "DevOps",              icon: "⚙️", color: "#2496ED", tag: "DevOps"},
 ];
 
 export default function Navigation() {
@@ -22,7 +22,7 @@ export default function Navigation() {
   const [activeId,     setActiveId]     = useState<string | null>(null);
   const [scrolled,     setScrolled]     = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLLIElement | null>(null);
+  const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -128,7 +128,7 @@ export default function Navigation() {
           top: calc(100% + 10px);
           left: 50%;
           transform: translateX(-50%) translateY(-8px);
-          width: 800px;
+          width: 750px;
           background: var(--surface);
           border: 1px solid var(--border);
           border-radius: 18px;
@@ -243,13 +243,27 @@ export default function Navigation() {
 
         /* ── Hamburger ── */
         .hamburger {
-          display: none; flex-direction: column; gap: 5px;
-          cursor: pointer; background: none; border: none; padding: 4px;
+          display: none;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          gap: 5px;
+          cursor: pointer;
+          background: none;
+          border: none;
+          width: 44px;
+          height: 44px;
+          padding: 0;
+          flex-shrink: 0;
+          -webkit-tap-highlight-color: transparent;
+          touch-action: manipulation;
         }
         .hamburger span {
           display: block; width: 22px; height: 2px;
           background: var(--text); border-radius: 2px;
-          transition: all 0.3s cubic-bezier(0.16,1,0.3,1); transform-origin: center;
+          transition: all 0.3s cubic-bezier(0.16,1,0.3,1);
+          transform-origin: center;
+          pointer-events: none;
         }
         .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .hamburger.open span:nth-child(2) { opacity: 0; transform: scaleX(0); }
@@ -317,10 +331,21 @@ export default function Navigation() {
         }
 
         /* ── Responsive ── */
-        @media (max-width: 900px) { .nav-links, .courses-trigger { display: none; } }
-        @media (max-width: 640px)  { .btn-primary { display: none; } .hamburger { display: flex; } }
-        @media (min-width: 641px) and (max-width: 900px) { .hamburger { display: flex; } }
-        @media (min-width: 901px) { .hamburger { display: none; } .mobile-menu { display: none !important; } }
+        /* Desktop: hide hamburger and mobile menu */
+        @media (min-width: 901px) {
+          .hamburger { display: none !important; }
+          .mobile-menu { display: none !important; }
+        }
+        /* Tablet + Mobile (≤900px): hide desktop nav, show hamburger */
+        @media (max-width: 900px) {
+          .nav-links, .courses-trigger { display: none; }
+          .hamburger { display: flex !important; }
+        }
+        /* Mobile only (≤640px): also hide the CTA button */
+        @media (max-width: 640px) {
+          .btn-primary { display: none; }
+          .mobile-menu { width: 100%; border-left: none; }
+        }
       `}</style>
 
       {/* ── NAVBAR ── */}
@@ -346,7 +371,7 @@ export default function Navigation() {
               </svg>
             </div>
             <div className="logo-text">
-              <span className="logo-primary">Computing Nexus CMS</span>
+              <span className="logo-primary">EduCMS</span>
               <span className="logo-sub">Content Studio</span>
             </div>
           </Link>
