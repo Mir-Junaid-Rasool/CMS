@@ -22,7 +22,7 @@ export default function Navigation() {
   const [activeId,     setActiveId]     = useState<string | null>(null);
   const [scrolled,     setScrolled]     = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const dropdownRef = useRef<HTMLLIElement | null>(null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -371,8 +371,8 @@ export default function Navigation() {
               </svg>
             </div>
             <div className="logo-text">
-              <span className="logo-primary">EduCMS</span>
-              <span className="logo-sub">Content Studio</span>
+              <span className="logo-primary">CMS</span>
+              <span className="logo-sub">Computing Nexus</span>
             </div>
           </Link>
 
