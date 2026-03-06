@@ -4,24 +4,7 @@ import Link from "next/link";
 /* ─────────────────────────────────────────────
    MODULE NAV DATA
 ───────────────────────────────────────────── */
-const modules = [
-  {
-    num: 1, title: "DevOps Foundations", color: "#2a5298",
-    sessions: [
-      { num: 1, title: "DevOps Fundamentals",    href: "/courses/dev/session1" },
-      { num: 2, title: "SDLC Models & DevOps",   href: "/courses/dev/session2" },
-      { num: 3, title: "DevOps Tools Ecosystem", href: "/courses/dev/session3" },
-    ],
-  },
-  {
-    num: 2, title: "DevOps in Practice", color: "#f05033",
-    sessions: [
-      { num: 4, title: "GIT Fundamentals",        href: "/courses/dev/session4" },
-      { num: 5, title: "GIT Operations & GitHub", href: "/courses/dev/session5" },
-      { num: 6, title: "Advanced GIT",            href: "/courses/dev/session6" },
-    ],
-  },
-];
+
 
 /* ─────────────────────────────────────────────
    DATA
@@ -95,8 +78,8 @@ export default function Session4() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .s4-page {
-          max-width: 1000px; margin: 0 auto;
-          padding: 3rem 1.5rem 6rem;
+          max-width: 1000px; 
+         
         }
 
         /* ── Breadcrumb ── */
@@ -346,28 +329,7 @@ export default function Session4() {
         </div>
 
         {/* ── MODULE NAVIGATION ── */}
-        <div className="module-nav">
-          {modules.map((mod) => (
-            <div key={mod.num} className="module-block">
-              <div className="module-header">
-                <span className="mod-badge" style={{ background: mod.color }}>Module {mod.num}</span>
-                <span className="mod-title">{mod.title}</span>
-              </div>
-              <div className="mod-sessions">
-                {mod.sessions.map((s, si) => (
-                  <Link
-                    key={s.num} href={s.href}
-                    className={`s-link${s.num === 4 ? " active" : ""}`}
-                    style={{ borderRight: si < mod.sessions.length - 1 ? "1px solid var(--border)" : "none" }}
-                  >
-                    <span className="sn" style={{ background: mod.color }}>S{s.num}</span>
-                    {s.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+    
 
         {/* Prev / Next */}
         <div className="nav-row">
@@ -430,7 +392,7 @@ export default function Session4() {
                 <li><span>❌</span><span>Lost work when files get corrupted or deleted</span></li>
                 <li><span>❌</span><span>No way to know who changed what and when</span></li>
                 <li><span>❌</span><span>Emailing code files back and forth</span></li>
-                <li><span>❌</span><span>Can't experiment without fear of breaking things</span></li>
+                <li><span>❌</span><span>Can&apos;t experiment without fear of breaking things</span></li>
                 <li><span>❌</span><span>No backup history at all</span></li>
               </ul>
             </div>

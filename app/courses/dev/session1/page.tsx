@@ -1,24 +1,7 @@
 // app/courses/dev/session1/page.tsx
 import Link from "next/link";
+import ModuleNav from "@/components/ModuleNav";
 
-const modules = [
-  {
-    num: 1, title: "DevOps Foundations", color: "#2a5298",
-    sessions: [
-      { num: 1, title: "DevOps Fundamentals",    href: "/courses/dev/session1" },
-      { num: 2, title: "SDLC Models & DevOps",   href: "/courses/dev/session2" },
-      { num: 3, title: "DevOps Tools Ecosystem", href: "/courses/dev/session3" },
-    ],
-  },
-  {
-    num: 2, title: "DevOps in Practice", color: "#11998e",
-    sessions: [
-      { num: 4, title: "Version Control & Git", href: "/courses/dev/session4" },
-      { num: 5, title: "CI/CD Pipelines",       href: "/courses/dev/session5" },
-      { num: 6, title: "Containers & Docker",   href: "/courses/dev/session6" },
-    ],
-  },
-];
 
 /* ─────────────────────────────────────────────
    DATA
@@ -194,19 +177,18 @@ export default function Session1() {
         /* ── Page ── */
         .s1-page {
           max-width: 1000px;
-          margin: 0 auto;
-          padding: 3rem 1.5rem 6rem;
+          
         }
 
         /* ── Breadcrumb ── */
         .breadcrumb {
           display: flex;
           align-items: center;
-          gap: 0.5rem;
+          gap: 0.3rem;
           font-family: 'JetBrains Mono', monospace;
           font-size: 0.7rem;
           color: var(--muted);
-          margin-bottom: 2.5rem;
+         
           flex-wrap: wrap;
         }
         .breadcrumb a {
@@ -876,25 +858,6 @@ export default function Session1() {
           <span className="current">Session 1: DevOps Fundamentals</span>
         </div>
 
-        {/* ── MODULE NAVIGATION ── */}
-        <div style={{display:"flex",flexDirection:"column",gap:"0.75rem",marginBottom:"2.5rem"}}>
-          {modules.map((mod) => (
-            <div key={mod.num} style={{borderRadius:"14px",overflow:"hidden",border:"1px solid var(--border)",background:"var(--surface)"}}>
-              <div style={{display:"flex",alignItems:"center",gap:"0.75rem",padding:"0.75rem 1rem",borderBottom:"1px solid var(--border)"}}>
-                <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.6rem",fontWeight:600,letterSpacing:"0.1em",textTransform:"uppercase",color:"#fff",padding:"0.2rem 0.65rem",borderRadius:"100px",background:mod.color,flexShrink:0}}>Module {mod.num}</span>
-                <span style={{fontSize:"0.82rem",fontWeight:700,color:"var(--text)"}}>{mod.title}</span>
-              </div>
-              <div style={{display:"flex",flexWrap:"wrap"}}>
-                {mod.sessions.map((s, si) => (
-                  <Link key={s.num} href={s.href} style={{flex:1,minWidth:"120px",display:"flex",alignItems:"center",gap:"0.5rem",padding:"0.65rem 1rem",fontFamily:"'JetBrains Mono',monospace",fontSize:"0.68rem",color: s.num === 1 ? "var(--text)" : "var(--text2)",textDecoration:"none",borderRight: si < mod.sessions.length - 1 ? "1px solid var(--border)" : "none",background: s.num === 1 ? "var(--surface2)" : "transparent",fontWeight: s.num === 1 ? 600 : 400}}>
-                    <span style={{width:"20px",height:"20px",borderRadius:"6px",display:"flex",alignItems:"center",justifyContent:"center",fontSize:"0.62rem",fontWeight:700,color:"#fff",background:mod.color,flexShrink:0}}>S{s.num}</span>
-                    {s.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
 
         {/* Quick nav row */}
         <div style={{display:"flex",alignItems:"center",justifyContent:"flex-end",marginBottom:"1.5rem"}}>

@@ -6,30 +6,6 @@ import Link from "next/link";
    Module 1 → Sessions 1, 2, 3
    Module 2 → Sessions 4, 5, 6
 ───────────────────────────────────────────── */
-const modules = [
-  {
-    num: 1,
-    title: "DevOps Foundations",
-    color: "#2a5298",
-    glow: "rgba(42,82,152,0.35)",
-    sessions: [
-      { num: 1, title: "DevOps Fundamentals",    href: "/courses/dev/session1" },
-      { num: 2, title: "SDLC Models & DevOps",   href: "/courses/dev/session2" },
-      { num: 3, title: "DevOps Tools Ecosystem", href: "/courses/dev/session3" },
-    ],
-  },
-  {
-    num: 2,
-    title: "DevOps in Practice",
-    color: "#11998e",
-    glow: "rgba(17,153,142,0.3)",
-    sessions: [
-      { num: 4, title: "Version Control & Git",  href: "/courses/dev/session4" },
-      { num: 5, title: "CI/CD Pipelines",        href: "/courses/dev/session5" },
-      { num: 6, title: "Containers & Docker",    href: "/courses/dev/session6" },
-    ],
-  },
-];
 
 /* ─────────────────────────────────────────────
    PAGE DATA
@@ -152,8 +128,8 @@ export default function Session2() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .s2-page {
-          max-width: 1000px; margin: 0 auto;
-          padding: 3rem 1.5rem 6rem;
+          max-width: 1000px; 
+          
         }
 
         /* ── Breadcrumb ── */
@@ -496,32 +472,7 @@ export default function Session2() {
         </div>
 
         {/* ── MODULE NAVIGATION ── */}
-        <div className="module-nav">
-          {modules.map((mod) => (
-            <div key={mod.num} className="module-block">
-              <div className="module-header">
-                <span className="module-badge" style={{ background: mod.color }}>
-                  Module {mod.num}
-                </span>
-                <span className="module-title">{mod.title}</span>
-              </div>
-              <div className="module-sessions">
-                {mod.sessions.map((s) => (
-                  <Link
-                    key={s.num}
-                    href={s.href}
-                    className={`session-link${s.num === 2 ? " active" : ""}`}
-                  >
-                    <span className="s-num" style={{ background: mod.color }}>
-                      S{s.num}
-                    </span>
-                    {s.title}
-                  </Link>
-                ))}
-              </div>
-            </div>
-          ))}
-        </div>
+       
 
         {/* Prev / Next quick nav */}
         <div className="session-nav-row">

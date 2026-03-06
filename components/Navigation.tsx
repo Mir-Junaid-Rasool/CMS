@@ -5,24 +5,33 @@ import Link from "next/link";
 import { useTheme } from "./Themecontext";
 
 const courses = [
-  { id: "ml",    name: "Machine Learning",    icon: "🧠", color: "#FF6B6B", tag: "AI"         },
-  { id: "react", name: "React",               icon: "⚛️", color: "#61DAFB", tag: "Frontend"   },
-  { id: "web",   name: "Web Technologies",    icon: "🌐", color: "#F7DF1E", tag: "Full Stack"  },
-  { id: "cloud", name: "Cloud Computing",     icon: "☁️", color: "#FF9900", tag: "DevOps"     },
-  { id: "data",  name: "Data Management",     icon: "🗄️", color: "#00D4AA", tag: "Database"   },
-  { id: "java",  name: "Java",                icon: "☕", color: "#ED8B00", tag: "Backend"     },
-  { id: "c",     name: "C Programming",       icon: "⚙️", color: "#A8B9CC", tag: "Systems"    },
-  { id: "se",    name: "Software Engineering",icon: "🏗️", color: "#B794F4", tag: "Process"    },
-   { id: "dev",   name: "DevOps",              icon: "⚙️", color: "#2496ED", tag: "DevOps"},
+  { id: "ml",    name: "Machine Learning",     icon: "🧠", color: "#FF6B6B", tag: "AI"         },
+  { id: "react", name: "React",                icon: "⚛️", color: "#61DAFB", tag: "Frontend"   },
+  { id: "web",   name: "Web Technologies",     icon: "🌐", color: "#F7DF1E", tag: "Full Stack"  },
+  { id: "cloud", name: "Cloud Computing",      icon: "☁️", color: "#FF9900", tag: "DevOps"     },
+  { id: "data",  name: "Data Management",      icon: "🗄️", color: "#00D4AA", tag: "Database"   },
+  { id: "java",  name: "Java",                 icon: "☕", color: "#ED8B00", tag: "Backend"     },
+  { id: "c",     name: "C Programming",        icon: "⚙️", color: "#A8B9CC", tag: "Systems"    },
+  { id: "se",    name: "Software Engineering", icon: "🏗️", color: "#B794F4", tag: "Process"    },
+  { id: "dev",   name: "DevOps",               icon: "⚙️", color: "#2496ED", tag: "DevOps"     },
 ];
 
 export default function Navigation() {
   const { theme, toggleTheme } = useTheme();
-  const [menuOpen,     setMenuOpen]     = useState(false);
-  const [activeId,     setActiveId]     = useState<string | null>(null);
-  const [scrolled,     setScrolled]     = useState(false);
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-  const dropdownRef = useRef<HTMLLIElement | null>(null);
+  const [menuOpen,      setMenuOpen]      = useState(false);
+  const [activeId,      setActiveId]      = useState<string | null>(null);
+  const [scrolled,      setScrolled]      = useState(false);
+  const [dropdownOpen,  setDropdownOpen]  = useState(false);
+  const [searchOpen,    setSearchOpen]    = useState(false);
+  const [searchQuery,   setSearchQuery]   = useState("");
+  const dropdownRef  = useRef<HTMLLIElement | null>(null);
+  const searchInputRef = useRef<HTMLInputElement | null>(null);
+
+  const filteredCourses = courses.filter(
+    (c) =>
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.tag.toLowerCase().includes(searchQuery.toLowerCase())
+  );
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -37,6 +46,24 @@ export default function Navigation() {
     };
     document.addEventListener("mousedown", onOutside);
     return () => document.removeEventListener("mousedown", onOutside);
+  }, []);
+
+  // Focus input when search opens
+  useEffect(() => {
+    if (searchOpen) {
+      setTimeout(() => searchInputRef.current?.focus(), 50);
+    } else {
+      setSearchQuery("");
+    }
+  }, [searchOpen]);
+
+  // Close search on Escape
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSearchOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    return () => document.removeEventListener("keydown", onKey);
   }, []);
 
   const isDark = theme === "dark";
@@ -191,6 +218,11 @@ export default function Navigation() {
           flex-shrink: 0;
         }
         .icon-btn:hover { color: var(--text); border-color: var(--border2); background: var(--surface2); }
+        .icon-btn.search-active {
+          color: var(--accent);
+          border-color: var(--accent);
+          background: color-mix(in srgb, var(--accent) 10%, transparent);
+        }
 
         /* ── Theme toggle ── */
         .theme-toggle {
@@ -330,18 +362,183 @@ export default function Navigation() {
           box-shadow: 0 4px 16px color-mix(in srgb, var(--accent) 35%, transparent);
         }
 
+        /* ─────────────────────────────────────────
+           SEARCH OVERLAY
+        ───────────────────────────────────────── */
+        .search-overlay {
+          position: fixed;
+          inset: 0;
+          z-index: 300;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          padding-top: 80px;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.2s;
+        }
+        .search-overlay.open {
+          pointer-events: all;
+          opacity: 1;
+        }
+
+        .search-backdrop {
+          position: absolute;
+          inset: 0;
+          background: rgba(0, 0, 0, 0.55);
+          backdrop-filter: blur(6px);
+          -webkit-backdrop-filter: blur(6px);
+        }
+
+        .search-box {
+          position: relative;
+          z-index: 1;
+          width: 100%;
+          max-width: 600px;
+          margin: 0 1rem;
+          background: var(--surface);
+          border: 1px solid var(--border2);
+          border-radius: 18px;
+          box-shadow: 0 32px 80px rgba(0,0,0,0.4);
+          overflow: hidden;
+          transform: translateY(-12px) scale(0.98);
+          transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
+        }
+        .search-overlay.open .search-box {
+          transform: translateY(0) scale(1);
+        }
+
+        .search-input-row {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 1rem 1.25rem;
+          border-bottom: 1px solid var(--border);
+        }
+        .search-icon-inner {
+          color: var(--muted);
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+        }
+        .search-input {
+          flex: 1;
+          background: none;
+          border: none;
+          outline: none;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.95rem;
+          color: var(--text);
+          letter-spacing: 0.02em;
+        }
+        .search-input::placeholder { color: var(--muted); }
+        .search-kbd {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.6rem;
+          color: var(--muted);
+          background: var(--surface2);
+          border: 1px solid var(--border);
+          padding: 0.2rem 0.5rem;
+          border-radius: 5px;
+          flex-shrink: 0;
+        }
+
+        .search-results {
+          max-height: 360px;
+          overflow-y: auto;
+          padding: 0.5rem;
+        }
+
+        .search-result-label {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.6rem;
+          color: var(--muted);
+          letter-spacing: 0.1em;
+          text-transform: uppercase;
+          padding: 0.5rem 0.75rem 0.35rem;
+        }
+
+        .search-result-item {
+          display: flex;
+          align-items: center;
+          gap: 0.85rem;
+          padding: 0.7rem 0.75rem;
+          border-radius: 10px;
+          text-decoration: none;
+          color: var(--text);
+          transition: background 0.15s;
+          cursor: pointer;
+        }
+        .search-result-item:hover {
+          background: var(--surface2);
+        }
+        .sri-icon {
+          width: 38px; height: 38px;
+          border-radius: 10px;
+          background: var(--surface2);
+          border: 1px solid var(--border);
+          display: flex; align-items: center; justify-content: center;
+          font-size: 1.1rem;
+          flex-shrink: 0;
+        }
+        .sri-info { display: flex; flex-direction: column; gap: 0.15rem; flex: 1; }
+        .sri-name { font-size: 0.85rem; font-weight: 600; color: var(--text); }
+        .sri-tag {
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.6rem;
+          color: var(--muted);
+        }
+        .sri-arrow {
+          color: var(--muted);
+          opacity: 0;
+          transition: opacity 0.15s, transform 0.15s;
+        }
+        .search-result-item:hover .sri-arrow {
+          opacity: 1;
+          transform: translate(2px, -2px);
+        }
+
+        .search-empty {
+          padding: 2rem 1rem;
+          text-align: center;
+          color: var(--muted);
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.8rem;
+        }
+        .search-empty-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+
+        .search-footer {
+          display: flex;
+          align-items: center;
+          gap: 1rem;
+          padding: 0.7rem 1.25rem;
+          border-top: 1px solid var(--border);
+          background: var(--surface2);
+        }
+        .sf-hint {
+          display: flex; align-items: center; gap: 0.35rem;
+          font-family: 'JetBrains Mono', monospace;
+          font-size: 0.58rem;
+          color: var(--muted);
+        }
+        .sf-hint kbd {
+          background: var(--surface);
+          border: 1px solid var(--border);
+          border-radius: 4px;
+          padding: 0.1rem 0.4rem;
+          font-size: 0.6rem;
+          color: var(--text2);
+        }
+
         /* ── Responsive ── */
-        /* Desktop: hide hamburger and mobile menu */
         @media (min-width: 901px) {
           .hamburger { display: none !important; }
           .mobile-menu { display: none !important; }
         }
-        /* Tablet + Mobile (≤900px): hide desktop nav, show hamburger */
         @media (max-width: 900px) {
           .nav-links, .courses-trigger { display: none; }
           .hamburger { display: flex !important; }
         }
-        /* Mobile only (≤640px): also hide the CTA button */
         @media (max-width: 640px) {
           .btn-primary { display: none; }
           .mobile-menu { width: 100%; border-left: none; }
@@ -422,8 +619,12 @@ export default function Navigation() {
 
           {/* Right actions */}
           <div className="nav-actions">
-            {/* Search */}
-            <button className="icon-btn" aria-label="Search">
+            {/* Search button */}
+            <button
+              className={`icon-btn${searchOpen ? " search-active" : ""}`}
+              aria-label="Search courses"
+              onClick={() => setSearchOpen(true)}
+            >
               <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                 <circle cx="6.5" cy="6.5" r="4.2" stroke="currentColor" strokeWidth="1.4"/>
                 <path d="M9.8 9.8L13 13" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round"/>
@@ -458,6 +659,76 @@ export default function Navigation() {
           </div>
         </div>
       </nav>
+
+      {/* ── SEARCH OVERLAY ── */}
+      <div className={`search-overlay${searchOpen ? " open" : ""}`}>
+        {/* Backdrop — click to close */}
+        <div className="search-backdrop" onClick={() => setSearchOpen(false)} />
+
+        <div className="search-box">
+          {/* Input row */}
+          <div className="search-input-row">
+            <span className="search-icon-inner">
+              <svg width="16" height="16" viewBox="0 0 15 15" fill="none">
+                <circle cx="6.5" cy="6.5" r="4.2" stroke="currentColor" strokeWidth="1.5"/>
+                <path d="M9.8 9.8L13 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+              </svg>
+            </span>
+            <input
+              ref={searchInputRef}
+              className="search-input"
+              placeholder="Search courses..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <span className="search-kbd">ESC</span>
+          </div>
+
+          {/* Results */}
+          <div className="search-results">
+            {filteredCourses.length > 0 ? (
+              <>
+                <div className="search-result-label">
+                  {searchQuery ? `${filteredCourses.length} result${filteredCourses.length !== 1 ? "s" : ""}` : "All Courses"}
+                </div>
+                {filteredCourses.map((course) => (
+                  <Link
+                    key={course.id}
+                    href={`/courses/${course.id}/session1`}
+                    className="search-result-item"
+                    onClick={() => { setActiveId(course.id); setSearchOpen(false); }}
+                  >
+                    <div className="sri-icon" style={{ borderColor: course.color + "40" }}>
+                      {course.icon}
+                    </div>
+                    <div className="sri-info">
+                      <span className="sri-name">{course.name}</span>
+                      <span className="sri-tag">{course.tag}</span>
+                    </div>
+                    <span className="sri-arrow">
+                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+                        <path d="M2 11L11 2M11 2H5M11 2v6" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                      </svg>
+                    </span>
+                  </Link>
+                ))}
+              </>
+            ) : (
+              <div className="search-empty">
+                <div className="search-empty-icon">🔍</div>
+                No courses found for &quot;{searchQuery}&quot;
+              </div>
+            )}
+          </div>
+
+          {/* Footer hints */}
+          <div className="search-footer">
+            <span className="sf-hint"><kbd>↑↓</kbd> navigate</span>
+            <span className="sf-hint"><kbd>↵</kbd> open</span>
+            <span className="sf-hint"><kbd>ESC</kbd> close</span>
+          </div>
+        </div>
+      </div>
 
       {/* ── MOBILE MENU ── */}
       <div className={`mobile-menu${menuOpen ? " open" : ""}`}>
