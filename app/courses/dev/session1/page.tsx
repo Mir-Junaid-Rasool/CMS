@@ -177,7 +177,8 @@ export default function Session1() {
         /* ── Page ── */
         .s1-page {
           max-width: 1000px;
-          
+          width: 100%;          /* ← was missing */
+          overflow-x: hidden;
         }
 
         /* ── Breadcrumb ── */

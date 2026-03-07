@@ -68,7 +68,8 @@ export default function Session3() {
 
         .s3-page {
           max-width: 1000px;
-          
+          width: 100%;          /* ← was missing */
+  overflow-x: hidden;
         }
 
         /* ── Breadcrumb ── */

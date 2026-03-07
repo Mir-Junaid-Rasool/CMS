@@ -1,7 +1,7 @@
 // app/courses/dev/layout.tsx
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import ModuleNav from "@/components/ModuleNav"; // adjust path as needed
 
 const modules = [
@@ -34,6 +34,27 @@ const modules = [
 
 export default function DevLayout({ children }: { children: React.ReactNode }) {
   const [mobileNavOpen, setMobileNavOpen] = useState(false);
+  const navBarRef  = useRef<HTMLDivElement>(null);
+  const drawerRef  = useRef<HTMLDivElement>(null);
+
+  // Close drawer when clicking anywhere outside the bar + drawer
+  useEffect(() => {
+    if (!mobileNavOpen) return;
+    const handleClick = (e: MouseEvent) => {
+      const target = e.target as Node;
+      if (
+        navBarRef.current?.contains(target) ||
+        drawerRef.current?.contains(target)
+      ) return;
+      setMobileNavOpen(false);
+    };
+    document.addEventListener("mousedown", handleClick);
+    document.addEventListener("touchstart", handleClick as EventListener);
+    return () => {
+      document.removeEventListener("mousedown", handleClick);
+      document.removeEventListener("touchstart", handleClick as EventListener);
+    };
+  }, [mobileNavOpen]);
 
   return (
     <>
@@ -46,11 +67,14 @@ export default function DevLayout({ children }: { children: React.ReactNode }) {
           max-width: 1280px;
           margin: 0 auto;
           padding: 0rem 1.5rem 6rem;
+          overflow-x: hidden;
         }
 
         .dev-content {
           flex: 1;
           min-width: 0;
+          overflow-x: hidden;
+          width: 100%;
         }
 
         /* ── mobile sticky bar shown only ≤860px ── */
@@ -139,6 +163,21 @@ export default function DevLayout({ children }: { children: React.ReactNode }) {
   border-top: none !important;
 }
 
+        /* ── backdrop overlay (mobile only, when drawer is open) ── */
+        .nav-backdrop {
+          display: none;
+        }
+        @media (max-width: 860px) {
+          .nav-backdrop {
+            display: block;
+            position: fixed;
+            inset: 0;
+            z-index: 98;
+            background: transparent;
+            cursor: pointer;
+          }
+        }
+
         /* ── breakpoints ── */
         @media (max-width: 860px) {
           .dev-shell {
@@ -157,8 +196,13 @@ export default function DevLayout({ children }: { children: React.ReactNode }) {
         }
       `}</style>
 
+      {/* ── backdrop: tap anywhere outside to close ── */}
+      {mobileNavOpen && (
+        <div className="nav-backdrop" onClick={() => setMobileNavOpen(false)} />
+      )}
+
       {/* ── mobile sticky bar ── */}
-      <div className="mobile-nav-bar">
+      <div className="mobile-nav-bar" ref={navBarRef}>
         <span className="mnb-label">📚 Course Navigation</span>
         <button
           className={`mnb-toggle${mobileNavOpen ? " open" : ""}`}
@@ -175,7 +219,7 @@ export default function DevLayout({ children }: { children: React.ReactNode }) {
       </div>
 
       {/* ── mobile slide-down drawer ── */}
-      <div className={`mobile-nav-drawer${mobileNavOpen ? " open" : ""}`}>
+      <div className={`mobile-nav-drawer${mobileNavOpen ? " open" : ""}`} ref={drawerRef}>
         <ModuleNav modules={modules} />
       </div>
 

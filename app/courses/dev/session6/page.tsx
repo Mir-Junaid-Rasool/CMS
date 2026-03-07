@@ -82,7 +82,8 @@ export default function Session6() {
 
         .s6-page {
           max-width: 1000px; 
-         
+         width: 100%;          /* ← was missing */
+  overflow-x: hidden;
         }
 
         /* ── Breadcrumb ── */

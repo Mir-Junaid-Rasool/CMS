@@ -78,7 +78,9 @@ export default function Session4() {
         *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
         .s4-page {
-          max-width: 1000px; 
+          max-width: 1000px;
+          width: 100%;          /* ← was missing */
+  overflow-x: hidden;
          
         }
 
@@ -218,7 +220,8 @@ export default function Session4() {
         .c-key { color: #ff7b72; }
 
         /* ── Command ref table ── */
-        .cmd-table { width: 100%; border-collapse: collapse; border-radius: 12px; overflow: hidden; margin: 1.25rem 0; font-size: 0.82rem; }
+        .cmd-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; margin: 1.25rem 0; border-radius: 12px; border: 1px solid var(--border); }
+        .cmd-table { width: 100%; border-collapse: collapse; font-size: 0.82rem; min-width: 480px; }
         .cmd-table thead th { padding: 0.85rem 1rem; text-align: left; font-weight: 700; font-size: 0.76rem; background: linear-gradient(135deg,#f05033,#e84118); color: #fff; }
         .cmd-table td { padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); color: var(--text2); vertical-align: top; line-height: 1.5; }
         .cmd-table td:first-child { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--accent); font-weight: 600; white-space: nowrap; background: var(--surface); }
@@ -308,11 +311,13 @@ export default function Session4() {
         /* ── Sub header ── */
         .sub-h { font-size: 0.95rem; font-weight: 700; color: var(--text); margin: 1.5rem 0 0.75rem; }
 
+        /* ── Feat split grid (without/with version control) ── */
+        .feat-split-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1.25rem 0; }
+        @media(max-width:600px){ .feat-split-grid { grid-template-columns: 1fr; } }
+
         @media(max-width:640px){
           .s4-page { padding: 2rem 1rem 4rem; }
-          .mod-sessions { flex-direction: column; }
-          .s-link { border-right: none !important; border-bottom: 1px solid var(--border); }
-          .s-link:last-child { border-bottom: none; }
+          .tk-grid { grid-template-columns: 1fr 1fr; }
           .tree-node { max-width: 100%; }
         }
       `}</style>
@@ -384,7 +389,7 @@ export default function Session4() {
             <p>Remember working on a Google Doc and seeing all the changes made by different people? You can go back to any previous version? <strong>GIT does exactly this — for code.</strong></p>
           </div>
 
-          <div style={{display:"grid",gridTemplateColumns:"1fr 1fr",gap:"1rem",margin:"1.25rem 0"}}>
+          <div className="feat-split-grid">
             <div className="feat-box red">
               <h4>❌ Without Version Control</h4>
               <ul>
@@ -620,14 +625,16 @@ git --version
         {/* ── COMMANDS ── */}
         <div id="s4p6">
           <div className="pt"><span className="pt-badge">Reference</span>Essential Commands</div>
-          <table className="cmd-table">
-            <thead><tr><th>Command</th><th>Description</th><th>Example</th></tr></thead>
-            <tbody>
-              {commandRef.map(([cmd, desc, ex]) => (
-                <tr key={cmd}><td>{cmd}</td><td>{desc}</td><td><code>{ex}</code></td></tr>
-              ))}
-            </tbody>
-          </table>
+          <div className="cmd-table-wrap">
+            <table className="cmd-table">
+              <thead><tr><th>Command</th><th>Description</th><th>Example</th></tr></thead>
+              <tbody>
+                {commandRef.map(([cmd, desc, ex]) => (
+                  <tr key={cmd}><td>{cmd}</td><td>{desc}</td><td><code>{ex}</code></td></tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
 
           <div className="sub-h">Understanding git status Output</div>
           <div className="cb">

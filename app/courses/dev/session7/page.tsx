@@ -129,6 +129,8 @@ export default function Session7() {
           margin: 0 auto;
           padding: 3rem 1.25rem 5rem;
           width: 100%;
+          width: 100%;          /* ← was missing */
+  overflow-x: hidden;
         }
 
         /* ── Breadcrumb ── */

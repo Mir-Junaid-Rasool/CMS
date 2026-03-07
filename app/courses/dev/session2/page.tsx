@@ -129,7 +129,8 @@ export default function Session2() {
 
         .s2-page {
           max-width: 1000px; 
-          
+          width: 100%;          /* ← was missing */
+  overflow-x: hidden;
         }
 
         /* ── Breadcrumb ── */
