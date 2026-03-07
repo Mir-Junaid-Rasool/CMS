@@ -870,7 +870,7 @@ export default function Session1() {
         {/* Hero */}
         <div className="session-hero">
           <div className="hero-meta">
-            <span className="hero-badge">Session 1 of 6</span>
+            <span className="hero-badge">Session 1 of 15</span>
             <span style={{fontFamily:"'JetBrains Mono',monospace",fontSize:"0.65rem",letterSpacing:"0.08em",textTransform:"uppercase",background:"rgba(255,255,255,0.1)",border:"1px solid rgba(255,255,255,0.18)",color:"rgba(255,255,255,0.8)",padding:"0.3rem 0.75rem",borderRadius:"100px"}}>Module 1 — DevOps Foundations</span>
             <span className="hero-duration">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

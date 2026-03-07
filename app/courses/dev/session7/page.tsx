@@ -127,7 +127,6 @@ export default function Session7() {
         .s7-page {
           max-width: 1000px;
           margin: 0 auto;
-          padding: 3rem 1.25rem 5rem;
           width: 100%;
           width: 100%;          /* ← was missing */
   overflow-x: hidden;
@@ -379,7 +378,7 @@ export default function Session7() {
         {/* ── HERO ── */}
         <div className="hero">
           <div className="hero-meta">
-            <span className="h-badge">Session 7 of 10</span>
+            <span className="h-badge">Session 7 of 15</span>
             <span className="h-mod">Module 3 &mdash; Continuous Integration</span>
             <span className="h-new">&#127381; New Module</span>
             <span className="h-dur">

@@ -303,7 +303,7 @@ export default function Session6() {
         {/* ── HERO ── */}
         <div className="hero">
           <div className="hero-meta">
-            <span className="h-badge">Session 6 of 6</span>
+            <span className="h-badge">Session 6 of 15</span>
             <span className="h-mod">Module 2 &mdash; DevOps in Practice</span>
             <span className="h-fin">&#127881; Module Final</span>
             <span className="h-dur">

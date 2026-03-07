@@ -345,7 +345,7 @@ export default function Session4() {
         {/* ── HERO ── */}
         <div className="hero">
           <div className="hero-meta">
-            <span className="h-badge">Session 4 of 6</span>
+            <span className="h-badge">Session 4 of 15</span>
             <span className="h-mod">Module 2 — DevOps in Practice</span>
             <span className="h-new">🆕 Start of Module 2</span>
             <span className="h-dur">

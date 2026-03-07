@@ -484,7 +484,7 @@ export default function Session2() {
         {/* Hero */}
         <div className="session-hero">
           <div className="hero-meta">
-            <span className="hero-badge">Session 2 of 6</span>
+            <span className="hero-badge">Session 2 of 15</span>
             <span className="hero-mod-tag">Module 1 — DevOps Foundations</span>
             <span className="hero-duration">
               <svg width="12" height="12" viewBox="0 0 12 12" fill="none">

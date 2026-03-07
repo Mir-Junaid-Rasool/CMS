@@ -327,7 +327,7 @@ export default function Session3() {
         {/* ── HERO ── */}
         <div className="session-hero">
           <div className="hero-meta">
-            <span className="hero-badge">Session 3 of 6</span>
+            <span className="hero-badge">Session 3 of 15</span>
             <span className="hero-mod-tag">Module 1 — DevOps Foundations</span>
             <span className="hero-final-tag">⭐ Final Session of Module 1</span>
             <span className="hero-duration">
