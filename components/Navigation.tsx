@@ -5,15 +5,15 @@ import Link from "next/link";
 import { useTheme } from "./Themecontext";
 
 const courses = [
-  { id: "ml",    name: "Machine Learning",     icon: "🧠", color: "#FF6B6B", tag: "AI"         },
-  { id: "react", name: "React",                icon: "⚛️", color: "#61DAFB", tag: "Frontend"   },
-  { id: "web",   name: "Web Technologies",     icon: "🌐", color: "#F7DF1E", tag: "Full Stack"  },
-  { id: "cloud", name: "Cloud Computing",      icon: "☁️", color: "#FF9900", tag: "DevOps"     },
-  { id: "data",  name: "Data Management",      icon: "🗄️", color: "#00D4AA", tag: "Database"   },
-  { id: "java",  name: "Java",                 icon: "☕", color: "#ED8B00", tag: "Backend"     },
-  { id: "c",     name: "C Programming",        icon: "⚙️", color: "#A8B9CC", tag: "Systems"    },
-  { id: "se",    name: "Software Engineering", icon: "🏗️", color: "#B794F4", tag: "Process"    },
-  { id: "dev",   name: "DevOps",               icon: "⚙️", color: "#2496ED", tag: "DevOps"     },
+  { id: "ml",    name: "Machine Learning",     icon: "🧠", color: "#FF6B6B", tag: "AI",         href: "/courses/ml/session1"    },
+  { id: "react", name: "React",                icon: "⚛️", color: "#61DAFB", tag: "Frontend",   href: "/courses/react/session1" },
+  { id: "web",   name: "Web Technologies",     icon: "🌐", color: "#F7DF1E", tag: "Full Stack",  href: "/courses/webtechnologies/html/session1" },
+  { id: "cloud", name: "Cloud Computing",      icon: "☁️", color: "#FF9900", tag: "DevOps",     href: "/courses/cloud/session1" },
+  { id: "data",  name: "Data Management",      icon: "🗄️", color: "#00D4AA", tag: "Database",   href: "/courses/data/session1"  },
+  { id: "java",  name: "Java",                 icon: "☕", color: "#ED8B00", tag: "Backend",     href: "/courses/java/session1"  },
+  { id: "c",     name: "C Programming",        icon: "⚙️", color: "#A8B9CC", tag: "Systems",    href: "/courses/c/session1"     },
+  { id: "se",    name: "Software Engineering", icon: "🏗️", color: "#B794F4", tag: "Process",    href: "/courses/se/session1"    },
+  { id: "dev",   name: "DevOps",               icon: "⚙️", color: "#2496ED", tag: "DevOps",     href: "/courses/dev/session1"   },
 ];
 
 export default function Navigation() {
@@ -598,7 +598,7 @@ export default function Navigation() {
                 {courses.map((course) => (
                   <Link
                     key={course.id}
-                    href={`/courses/${course.id}/session1`}
+                    href={course.href}
                     className="course-item"
                     onClick={() => { setActiveId(course.id); setDropdownOpen(false); }}
                     style={{ borderColor: activeId === course.id ? course.color + "40" : undefined }}

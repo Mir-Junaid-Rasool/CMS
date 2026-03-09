@@ -1,0 +1,603 @@
+/* ============================================================
+   session.module.css
+   Scoped styles for Web-Technologies HTML session pages.
+   Uses CSS variables from your global theme (var(--surface),
+   var(--border), var(--text), var(--muted), etc.)
+   ============================================================ */
+
+/* ── Page wrapper ───────────────────────────────────────────── */
+.page {
+  flex: 1;
+  min-width: 0;
+  max-width: 860px;
+}
+
+@media (max-width: 860px) {
+  .page { padding: 1.25rem 1rem 3rem; }
+}
+
+/* ── Session header ─────────────────────────────────────────── */
+.header {
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 1rem;
+}
+
+.breadcrumb a {
+  color: var(--muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+
+.breadcrumb a:hover { color: var(--text); }
+
+.breadcrumbSep { opacity: 0.4; }
+
+.sessionBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.65rem;
+  border-radius: 20px;
+  border: 1px solid;
+  margin-bottom: 0.85rem;
+}
+
+.title {
+  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.6;
+  max-width: 640px;
+  margin-bottom: 1.25rem;
+}
+
+.metaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+}
+
+.metaChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  color: var(--muted);
+  background: var(--surface2, rgba(255,255,255,0.04));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 0.2rem 0.6rem;
+}
+
+/* ── Tab navigation ─────────────────────────────────────────── */
+.tabs {
+  display: flex;
+  gap: 0.25rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--border);
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.tabs::-webkit-scrollbar { display: none; }
+
+.tabBtn {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.6rem 1rem;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  white-space: nowrap;
+  transition: color 0.15s, border-color 0.15s;
+  margin-bottom: -1px;
+}
+
+.tabBtn:hover { color: var(--text); }
+
+.tabBtn.activeTab {
+  color: var(--text);
+  border-bottom-color: currentColor;
+}
+
+/* ── Section heading ─────────────────────────────────────────── */
+.sectionTitle {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 1rem;
+  letter-spacing: -0.01em;
+}
+
+.sectionLead {
+  font-size: 0.9rem;
+  color: var(--muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+/* ── Objectives grid ─────────────────────────────────────────── */
+.objectivesGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.objectiveCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 0.9rem 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.objectiveDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+}
+
+.objectiveText {
+  font-size: 0.8rem;
+  color: var(--text2, var(--text));
+  line-height: 1.5;
+}
+
+/* ── Outcomes table ──────────────────────────────────────────── */
+.outcomesTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.78rem;
+  margin-bottom: 1rem;
+}
+
+.outcomesTable th {
+  text-align: left;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.outcomesTable td {
+  padding: 0.7rem 0.75rem;
+  border-bottom: 1px solid var(--border);
+  color: var(--text);
+  line-height: 1.5;
+  vertical-align: top;
+}
+
+.outcomesTable tr:last-child td { border-bottom: none; }
+
+.coCode {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.levelBadge {
+  display: inline-block;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+  white-space: nowrap;
+}
+
+/* ── Topic sections ──────────────────────────────────────────── */
+.topicBlock {
+  margin-bottom: 2.5rem;
+}
+
+.topicHeading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.6rem;
+  padding-left: 0.85rem;
+  border-left: 3px solid;
+}
+
+.topicContent {
+  font-size: 0.85rem;
+  color: var(--muted);
+  line-height: 1.75;
+  margin-bottom: 1rem;
+}
+
+/* ── Definition list ─────────────────────────────────────────── */
+.defList {
+  display: grid;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+
+.defItem {
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  font-size: 0.78rem;
+}
+
+@media (max-width: 560px) {
+  .defItem { grid-template-columns: 1fr; }
+}
+
+.defLabel {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--text);
+  word-break: break-all;
+}
+
+.defDesc {
+  color: var(--muted);
+  line-height: 1.55;
+}
+
+/* ── Code block ──────────────────────────────────────────────── */
+.codeGroup {
+  margin-bottom: 1.25rem;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+
+.codeLabel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.45rem 0.9rem;
+  background: var(--surface2, rgba(255,255,255,0.04));
+  border-bottom: 1px solid var(--border);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.58rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.copyBtn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--muted);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.55rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.2rem 0.4rem;
+  border-radius: 4px;
+  transition: color 0.15s, background 0.15s;
+}
+
+.copyBtn:hover {
+  color: var(--text);
+  background: var(--border);
+}
+
+.codeBlock {
+  background: #0d1117;
+  color: #e6edf3;
+  padding: 1rem 1.1rem;
+  overflow-x: auto;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.75rem;
+  line-height: 1.7;
+  margin: 0;
+  white-space: pre;
+  tab-size: 2;
+}
+
+/* Syntax highlight colours (rendered from data) */
+.codeBlock .tag    { color: #7ee787; }
+.codeBlock .attr   { color: #79c0ff; }
+.codeBlock .val    { color: #a5d6ff; }
+.codeBlock .comment { color: #8b949e; font-style: italic; }
+.codeBlock .str    { color: #a5d6ff; }
+
+/* ── Note / tip box ──────────────────────────────────────────── */
+.noteBox {
+  display: flex;
+  gap: 0.65rem;
+  padding: 0.85rem 1rem;
+  border-radius: 8px;
+  border-left: 3px solid;
+  margin: 1rem 0 1.5rem;
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--text2, var(--text));
+}
+
+/* ── Timeline ────────────────────────────────────────────────── */
+.timeline {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 2rem;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 0.45rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  border-radius: 100px;
+}
+
+.timelineItem {
+  position: relative;
+  margin-bottom: 1.75rem;
+}
+
+.timelineItem:last-child { margin-bottom: 0; }
+
+.timelineDot {
+  position: absolute;
+  left: -1.725rem;
+  top: 0.35rem;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: 2px solid;
+  background: var(--surface);
+}
+
+.timelineYear {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 0.2rem;
+}
+
+.timelineTitle {
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.3rem;
+}
+
+.timelineDesc {
+  font-size: 0.78rem;
+  color: var(--muted);
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+}
+
+.timelineDetail {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  opacity: 0.7;
+}
+
+/* ── Key takeaways grid ──────────────────────────────────────── */
+.takeawaysGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.takeawayCard {
+  padding: 1rem;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  text-align: center;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.takeawayCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+}
+
+.takeawayIcon { font-size: 1.75rem; margin-bottom: 0.5rem; }
+
+.takeawayTitle {
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 0.25rem;
+}
+
+.takeawayDesc {
+  font-size: 0.7rem;
+  color: var(--muted);
+  line-height: 1.5;
+}
+
+/* ── Practice assignment ─────────────────────────────────────── */
+.assignmentBox {
+  border-radius: 10px;
+  border: 1px solid;
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.assignmentHeader {
+  padding: 0.75rem 1rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+
+.assignmentList {
+  padding: 0.75rem 1rem 0.75rem 2.25rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.assignmentList li {
+  font-size: 0.8rem;
+  color: var(--text2, var(--text));
+  line-height: 1.5;
+}
+
+/* ── Next sessions list ──────────────────────────────────────── */
+.nextList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+}
+
+.nextItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.7rem 1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  font-size: 0.78rem;
+  color: var(--text);
+}
+
+.nextNum {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.62rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+/* ── Navigation footer ───────────────────────────────────────── */
+.navFooter {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 2rem;
+  margin-top: 2rem;
+  border-top: 1px solid var(--border);
+  gap: 1rem;
+}
+
+.navBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.1rem;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.navBtn:hover {
+  background: var(--surface2, rgba(255,255,255,0.06));
+  border-color: var(--border2, var(--border));
+}
+
+.navBtnPrimary {
+  border-color: transparent;
+}
+
+/* ── Interactive demo (tab 5) ────────────────────────────────── */
+.demoPane {
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.demoBtnRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface2, rgba(255,255,255,0.03));
+}
+
+.demoBtn {
+  padding: 0.45rem 0.85rem;
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.72rem;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.demoBtn:hover {
+  background: var(--surface2, rgba(255,255,255,0.06));
+}
+
+.demoBtn.activeDemoBtn {
+  border-color: transparent;
+  color: #fff;
+}
+
+.demoOutput {
+  padding: 1.25rem;
+  min-height: 160px;
+  font-size: 0.82rem;
+  line-height: 1.7;
+  color: var(--text);
+}
