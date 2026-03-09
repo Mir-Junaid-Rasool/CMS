@@ -23,8 +23,9 @@ const SESSION_MAP: Record<string, () => Promise<{ default: SessionData }>> = {
   "html-session3": () => import("@/data/courses/webtechnologies/html/session3") as Promise<{ default: SessionData }>,
   "html-session4": () => import("@/data/courses/webtechnologies/html/session4") as Promise<{ default: SessionData }>,
   "html-session5": () => import("@/data/courses/webtechnologies/html/session5") as Promise<{ default: SessionData }>,
+  "html-session6": () => import("@/data/courses/webtechnologies/html/session6") as Promise<{ default: SessionData }>,
   // Uncomment as you create data files:
-  // "css-session7":  () => import("@/data/courses/webtechnologies/css/session7")  as Promise<{ default: SessionData }>,
+  "css-session7":  () => import("@/data/courses/webtechnologies/css/session7")  as Promise<{ default: SessionData }>,
 };
 
 // ─────────────────────────────────────────────────────────────

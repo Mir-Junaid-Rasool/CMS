@@ -744,7 +744,7 @@ export default function Navigation() {
           {courses.map((course) => (
             <Link
               key={course.id}
-              href={`/courses/${course.id}/session1`}
+              href={course.href}
               className="mobile-course-card"
               style={{ borderColor: activeId === course.id ? course.color + "60" : undefined }}
               onClick={() => { setActiveId(course.id); setMenuOpen(false); }}

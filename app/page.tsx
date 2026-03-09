@@ -6,54 +6,63 @@ const courses = [
     lessons: 24, students: 138, progress: 68,
     grad: "linear-gradient(135deg,#FF416C 0%,#FF4B2B 100%)", shadow: "rgba(255,65,108,0.4)",
     topics: ["Neural Networks","Supervised Learning","Model Eval"],
+    href:"/courses/ml",
   },
   {
     id: "react", name: "React",                tag: "Frontend Dev",      icon: "⚛️",
     lessons: 32, students: 210, progress: 82,
     grad: "linear-gradient(135deg,#00C6FF 0%,#0072FF 100%)", shadow: "rgba(0,114,255,0.4)",
     topics: ["Hooks","State Mgmt","Component Patterns"],
+    href:"/courses/react",
   },
   {
     id: "web",   name: "Web Technologies",     tag: "Full Stack",        icon: "🌐",
     lessons: 28, students: 175, progress: 55,
     grad: "linear-gradient(135deg,#F7971E 0%,#FFD200 100%)", shadow: "rgba(247,151,30,0.4)",
     topics: ["HTML5","CSS Grid","REST APIs"],
+    href:"/courses/webtechnologies/html"
   },
   {
     id: "cloud", name: "Cloud Computing",      tag: "DevOps",            icon: "☁️",
     lessons: 20, students: 92,  progress: 40,
     grad: "linear-gradient(135deg,#56CCF2 0%,#2F80ED 100%)", shadow: "rgba(47,128,237,0.4)",
     topics: ["AWS","Containers","Serverless"],
+    href:"/courses/webtechnologies/html",
   },
   {
     id: "data",  name: "Data Management",      tag: "Database",          icon: "🗄️",
     lessons: 18, students: 114, progress: 73,
     grad: "linear-gradient(135deg,#11998E 0%,#38EF7D 100%)", shadow: "rgba(56,239,125,0.35)",
     topics: ["SQL","NoSQL","Data Modeling"],
+    href:"/courses/webtechnologies/html",
   },
   {
     id: "java",  name: "Java",                 tag: "Backend",           icon: "☕",
     lessons: 36, students: 156, progress: 61,
     grad: "linear-gradient(135deg,#F953C6 0%,#B91D73 100%)", shadow: "rgba(249,83,198,0.4)",
     topics: ["OOP","Spring Boot","Concurrency"],
+    href:"/courses/webtechnologies/html",
   },
   {
     id: "c",     name: "C Programming",        tag: "Systems",           icon: "⚙️",
     lessons: 22, students: 88,  progress: 50,
     grad: "linear-gradient(135deg,#7F00FF 0%,#E100FF 100%)", shadow: "rgba(225,0,255,0.35)",
     topics: ["Pointers","Memory Mgmt","File I/O"],
+    href:"/courses/webtechnologies/html",
   },
   {
     id: "se",    name: "Software Engineering", tag: "Process",           icon: "🏗️",
     lessons: 26, students: 130, progress: 45,
     grad: "linear-gradient(135deg,#FF8008 0%,#FFC837 100%)", shadow: "rgba(255,200,55,0.35)",
     topics: ["Agile","Design Patterns","Testing"],
+    href:"/courses/webtechnologies/html"
   },
   {
     id: "dev",    name: "DevOps",     tag: "DevOps", icon: "🧠",
     lessons: 24, students: 138, progress: 68,
     grad: "linear-gradient(135deg,#FF416C 0%,#FF4B2B 100%)", shadow: "rgba(255,65,108,0.4)",
     topics: ["Git","Jenkins","CICD"],
+    href:"/courses/dev/session1",
   },
 ];
 
@@ -361,7 +370,7 @@ export default function HomePage() {
           {courses.map((c) => (
             <Link
               key={c.id}
-              href={`/courses/${c.id}/session1`}
+              href={c.href}
               className="card"
               style={{
                 ["--card-grad"   as string]: c.grad,
