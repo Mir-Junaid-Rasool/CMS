@@ -26,6 +26,15 @@ const SESSION_MAP: Record<string, () => Promise<{ default: SessionData }>> = {
   "html-session6": () => import("@/data/courses/webtechnologies/html/session6") as Promise<{ default: SessionData }>,
   // Uncomment as you create data files:
   "css-session7":  () => import("@/data/courses/webtechnologies/css/session7")  as Promise<{ default: SessionData }>,
+  "css-session8": () => import("@/data/courses/webtechnologies/css/session8") as Promise<{ default: SessionData }>,
+  "css-session9": () => import("@/data/courses/webtechnologies/css/session9") as Promise<{ default: SessionData }>,
+  "css-session10": () => import("@/data/courses/webtechnologies/css/session10") as Promise<{ default: SessionData }>,
+  "css-session11": () => import("@/data/courses/webtechnologies/css/session11") as Promise<{ default: SessionData }>,
+  "css-session12": () => import("@/data/courses/webtechnologies/css/session12") as Promise<{ default: SessionData }>,
+  "js-session13": () => import("@/data/courses/webtechnologies/js/session13") as Promise<{ default: SessionData }>,
+  "js-session14": () => import("@/data/courses/webtechnologies/js/session14") as Promise<{ default: SessionData }>,
+  "js-session15": () => import("@/data/courses/webtechnologies/js/session15") as Promise<{ default: SessionData }>,
+  "js-session16": () => import("@/data/courses/webtechnologies/js/session16") as Promise<{ default: SessionData }>,
 };
 
 // ─────────────────────────────────────────────────────────────

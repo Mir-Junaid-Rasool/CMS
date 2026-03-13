@@ -107,7 +107,7 @@ export default function ModuleNav({ modules }: Props) {
         }
 
         .lnav-mod { border-bottom: 1px solid var(--border); }
-        .lnav-mod:last-child { border-bottom: none; overflow: hidden; }
+        .lnav-mod:last-child { border-bottom: none;  }
 
         .lnav-trigger {
           width: 100%;

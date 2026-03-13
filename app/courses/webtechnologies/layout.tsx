@@ -36,12 +36,12 @@ const moduleData = [
     title: "JavaScript",
     color: "#eab308",
     sessions: [
-      { num: 13, title: "Introduction to JavaScript",       href: "/courses/webtechnologies/javascript/session13" },
-      { num: 14, title: "Variables, Data Types & Operators",href: "/courses/webtechnologies/javascript/session14" },
-      { num: 15, title: "Functions & Scope",                href: "/courses/webtechnologies/javascript/session15" },
-      { num: 16, title: "DOM Manipulation",                 href: "/courses/webtechnologies/javascript/session16" },
-      { num: 17, title: "Events & Event Handling",          href: "/courses/webtechnologies/javascript/session17" },
-      { num: 18, title: "Forms Validation",                 href: "/courses/webtechnologies/javascript/session18" },
+      { num: 13, title: "Introduction to JavaScript",       href: "/courses/webtechnologies/js/session13" },
+      { num: 14, title: "Variables, Data Types & Operators",href: "/courses/webtechnologies/js/session14" },
+      { num: 15, title: "Functions & Scope",                href: "/courses/webtechnologies/js/session15" },
+      { num: 16, title: "DOM Manipulation",                 href: "/courses/webtechnologies/js/session16" },
+      { num: 17, title: "Events & Event Handling",          href: "/courses/webtechnologies/js/session17" },
+      { num: 18, title: "Forms Validation",                 href: "/courses/webtechnologies/js/session18" },
     ],
   },
   {
