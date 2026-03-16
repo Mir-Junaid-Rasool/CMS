@@ -27,7 +27,6 @@ const session1: SessionData = {
     },
   },
 
-  // ── Topics ──────────────────────────────────────────────────────────
   topics: [
     {
       id: "what-is-html",
@@ -346,26 +345,30 @@ function greet(name) {
         },
       ],
       definitions: [
-        { term: "<header>",           description: "Introductory content or navigation for the page or a section." },
-        { term: "<nav>",              description: "A set of navigation links." },
-        { term: "<main>",             description: "The dominant, unique content of the page. Only one per page." },
-        { term: "<article>",          description: "Self-contained content that makes sense independently (blog post, news article, product card)." },
-        { term: "<section>",          description: "A thematic grouping of content with its own heading." },
-        { term: "<aside>",            description: "Content tangentially related to the main content (sidebars, pull quotes, ads)." },
-        { term: "<footer>",           description: "Footer for the page or a section — copyright, links, contact info." },
+        { term: "<header>",                description: "Introductory content or navigation for the page or a section." },
+        { term: "<nav>",                   description: "A set of navigation links." },
+        { term: "<main>",                  description: "The dominant, unique content of the page. Only one per page." },
+        { term: "<article>",               description: "Self-contained content that makes sense independently (blog post, news article, product card)." },
+        { term: "<section>",               description: "A thematic grouping of content with its own heading." },
+        { term: "<aside>",                 description: "Content tangentially related to the main content (sidebars, pull quotes, ads)." },
+        { term: "<footer>",                description: "Footer for the page or a section — copyright, links, contact info." },
         { term: "<figure> / <figcaption>", description: "Self-contained media (image, diagram, chart) with an optional caption." },
       ],
     },
   ],
 
-  // ── Live Demos ───────────────────────────────────────────────────────
   demos: [
     {
       id: "demo1",
       label: "Document Structure",
+      // FIX: removed white-space:pre from the wrapper div.
+      // white-space:pre on a div prevents text wrapping and causes
+      // the div to expand beyond the viewport on narrow screens (360px).
+      // The code content is already inside a monospace styled div
+      // that handles its own presentation without needing pre-wrap.
       html: `<div style="font-family:sans-serif;line-height:1.7;font-size:0.85rem">
   <h3 style="color:#3b82f6;margin:0 0 10px">HTML Document Skeleton</h3>
-  <div style="background:#0d1117;color:#e6edf3;padding:14px;border-radius:8px;font-family:monospace;font-size:0.78rem;white-space:pre">&lt;!DOCTYPE html&gt;
+  <div style="background:#0d1117;color:#e6edf3;padding:14px;border-radius:8px;font-family:monospace;font-size:0.78rem;overflow-x:auto;-webkit-overflow-scrolling:touch;white-space:pre;max-width:100%;box-sizing:border-box">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
   &lt;head&gt;
     &lt;meta charset="UTF-8"&gt;
@@ -399,7 +402,7 @@ function greet(name) {
       html: `<div style="font-family:sans-serif;font-size:0.85rem;line-height:1.8">
   <h3 style="color:#3b82f6;margin:0 0 10px">Attributes Demo</h3>
   <p>Image with <code>src</code>, <code>alt</code>, <code>width</code>:</p>
-  <img src="https://placehold.co/200x80/3b82f6/white?text=img+tag" alt="Placeholder" width="200" style="border-radius:6px;display:block;margin-bottom:8px">
+  <img src="https://placehold.co/200x80/3b82f6/white?text=img+tag" alt="Placeholder" style="max-width:100%;height:auto;border-radius:6px;display:block;margin-bottom:8px">
   <p>Link with <code>href</code> and <code>target="_blank"</code>:<br>
     <a href="https://developer.mozilla.org" target="_blank" rel="noopener" style="color:#3b82f6">MDN Web Docs ↗</a>
   </p>
@@ -411,13 +414,17 @@ function greet(name) {
     {
       id: "demo4",
       label: "Semantic Layout",
-      html: `<div style="font-family:sans-serif;font-size:0.82rem;max-width:480px">
+      // FIX: removed hardcoded `grid-template-columns: 1fr 180px`.
+      // On 360px viewport (Samsung S8+), 1fr + 180px = ~460px minimum
+      // which cannot fit and causes horizontal overflow.
+      // Changed to a single flex-column layout that works on all widths.
+      html: `<div style="font-family:sans-serif;font-size:0.82rem;max-width:100%;box-sizing:border-box">
   <div style="background:#3b82f6;color:white;padding:12px 16px;border-radius:8px 8px 0 0">
     <strong>header</strong> — My Blog &nbsp;·&nbsp; <em style="font-size:0.75rem">nav: Home · About</em>
   </div>
-  <div style="display:grid;grid-template-columns:1fr 180px;border:1px solid #bfdbfe;border-top:none">
-    <div style="padding:12px;border-right:1px solid #bfdbfe">
-      <div style="background:#eff6ff;padding:10px;border-radius:6px;margin-bottom:8px">
+  <div style="border:1px solid #bfdbfe;border-top:none;border-radius:0 0 0 0">
+    <div style="padding:12px;border-bottom:1px solid #bfdbfe">
+      <div style="background:#eff6ff;padding:10px;border-radius:6px">
         <strong>main &gt; article</strong>
         <p style="margin:4px 0 0;color:#555">Blog post content…</p>
       </div>
@@ -425,7 +432,7 @@ function greet(name) {
     <div style="padding:12px;background:#f8fafc">
       <strong>aside</strong>
       <ul style="margin:6px 0 0;padding-left:16px;color:#555">
-        <li>Post 1</li><li>Post 2</li>
+        <li>Recent Post 1</li><li>Recent Post 2</li>
       </ul>
     </div>
   </div>
@@ -436,7 +443,6 @@ function greet(name) {
     },
   ],
 
-  // ── Exercises ────────────────────────────────────────────────────────
   exercises: [
     {
       title: "Exercise 1: Build Your First HTML Page",

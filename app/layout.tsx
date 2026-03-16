@@ -75,8 +75,14 @@ export default function RootLayout({
             padding: 0;
           }
 
+          /* FIX: overflow-x:hidden must be on BOTH html AND body.
+             On iOS Safari, setting it only on body is ignored —
+             the browser treats body overflow as viewport overflow
+             and scrolls the page anyway. Setting it on html too
+             locks the root scroll container on all browsers.     */
           html {
             scroll-behavior: smooth;
+            overflow-x: hidden;
           }
 
           body {
@@ -85,6 +91,8 @@ export default function RootLayout({
             font-family: 'Plus Jakarta Sans', sans-serif;
             min-height: 100vh;
             overflow-x: hidden;
+            /* FIX: body can never render wider than the viewport */
+            max-width: 100vw;
             transition: background 0.35s ease, color 0.35s ease;
           }
 
@@ -111,6 +119,11 @@ export default function RootLayout({
           ===================================================== */
           main {
             padding-top: 68px;
+            /* FIX: min-width:0 allows main to shrink as a flex
+               child; overflow-x:hidden clips anything that
+               escapes inner layout containers               */
+            min-width: 0;
+            overflow-x: hidden;
           }
         `}</style>
       </head>
