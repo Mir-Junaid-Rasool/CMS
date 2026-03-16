@@ -9,7 +9,7 @@ const session16: SessionData = {
     title: "DOM Manipulation",
     subtitle: "Learn to read, create, and modify HTML elements with JavaScript — making pages dynamic and interactive in real time",
     duration: "2 hrs",
-    color: "008000",
+    color: "#A832A8",
     colorDim: "rgba(247,223,30,0.10)",
     colorMid: "rgba(247,223,30,0.22)",
     objectives: [

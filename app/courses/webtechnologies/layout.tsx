@@ -34,7 +34,7 @@ const moduleData = [
   {
     num: 3,
     title: "JavaScript",
-    color: "#eab308",
+    color: "#ff88ff",
     sessions: [
       { num: 13, title: "Introduction to JavaScript",       href: "/courses/webtechnologies/js/session13" },
       { num: 14, title: "Variables, Data Types & Operators",href: "/courses/webtechnologies/js/session14" },

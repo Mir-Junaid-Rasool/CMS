@@ -62,7 +62,7 @@ const MODULE_DATA = {
     title: "JavaScript",
     fullTitle: "JavaScript — Client-Side Scripting",
     icon: "⚡",
-    color: "#eab308",
+    color: "#ff2299",
     colorDim: "rgba(234,179,8,0.10)",
     colorMid: "rgba(234,179,8,0.18)",
     description:

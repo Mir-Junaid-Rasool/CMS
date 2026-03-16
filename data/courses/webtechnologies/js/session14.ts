@@ -9,7 +9,7 @@ const session14: SessionData = {
     title: "Variables, Data Types & Operators",
     subtitle: "A deep dive into how JavaScript stores, classifies, and transforms data — the foundation every program is built on",
     duration: "2 hrs",
-    color: "008000",
+    color: "#A832A8",
     colorDim: "rgba(247,223,30,0.10)",
     colorMid: "rgba(247,223,30,0.22)",
     objectives: [

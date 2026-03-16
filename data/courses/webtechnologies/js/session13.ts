@@ -9,7 +9,7 @@ const session13: SessionData = {
     title: "JavaScript Introduction & Basics",
     subtitle: "From zero to writing real code — variables, data types, operators, conditionals, and loops explained from the ground up",
     duration: "2 hrs",
-    color: "008000",
+    color: "#A832A8",
     colorDim: "rgba(247,223,30,0.10)",
     colorMid: "rgba(247,223,30,0.22)",
     objectives: [

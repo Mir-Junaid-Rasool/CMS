@@ -35,6 +35,8 @@ const SESSION_MAP: Record<string, () => Promise<{ default: SessionData }>> = {
   "js-session14": () => import("@/data/courses/webtechnologies/js/session14") as Promise<{ default: SessionData }>,
   "js-session15": () => import("@/data/courses/webtechnologies/js/session15") as Promise<{ default: SessionData }>,
   "js-session16": () => import("@/data/courses/webtechnologies/js/session16") as Promise<{ default: SessionData }>,
+  "js-session17": () => import("@/data/courses/webtechnologies/js/session17") as Promise<{ default: SessionData }>,
+  "js-session18": () => import("@/data/courses/webtechnologies/js/session18") as Promise<{ default: SessionData }>,
 };
 
 // ─────────────────────────────────────────────────────────────
@@ -773,7 +775,7 @@ const css = `
   .sp-demo-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   .sp-demo-btn {
     padding: 0.45rem 0.85rem; border-radius: 8px;
-    border: 1px solid var(--border); background: var(--surface);
+    border: 1px solid var(--border); background: var(--surface2);
     color: var(--text); font-size: 0.75rem; cursor: pointer;
     transition: background 0.15s, border-color 0.15s, color 0.15s;
   }

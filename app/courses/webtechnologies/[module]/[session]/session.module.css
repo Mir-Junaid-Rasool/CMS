@@ -90,7 +90,7 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 0.6rem;
   color: var(--muted);
-  background: var(--surface2, rgba(255,255,255,0.04));
+  background: var(--surface2, rgba(11, 13, 65, 0.04));
   border: 1px solid var(--border);
   border-radius: 20px;
   padding: 0.2rem 0.6rem;
@@ -571,7 +571,7 @@
   gap: 0.5rem;
   padding: 0.85rem 1rem;
   border-bottom: 1px solid var(--border);
-  background: var(--surface2, rgba(255,255,255,0.03));
+  background: var(--surface2, rgba(159, 18, 18, 0.03));
 }
 
 .demoBtn {

@@ -9,7 +9,7 @@ const session15: SessionData = {
     title: "Functions & Scope",
     subtitle: "Master the building blocks of every JavaScript program — how to write reusable code, understand where variables live, and use modern arrow function syntax",
     duration: "2 hrs",
-    color: "008000",
+    color: "#A832A8",
     colorDim: "rgba(247,223,30,0.10)",
     colorMid: "rgba(247,223,30,0.22)",
     objectives: [
