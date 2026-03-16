@@ -4,19 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 
-// ─────────────────────────────────────────────────────────────
-//  FIX 2: Import types from the single source of truth.
-//  Both this file AND every session data file must import
-//  SessionData from this same path — never re-declare it.
-// ─────────────────────────────────────────────────────────────
 import type { SessionData, TopicSection } from "@/types/session";
 
-// ─────────────────────────────────────────────────────────────
-//  SESSION MAP
-//  FIX 2 (continued): cast each import so TS knows the shape.
-//  This is safe because every session file exports `default`
-//  of type SessionData.
-// ─────────────────────────────────────────────────────────────
 const SESSION_MAP: Record<string, () => Promise<{ default: SessionData }>> = {
   "html-session1": () => import("@/data/courses/webtechnologies/html/session1") as Promise<{ default: SessionData }>,
   "html-session2": () => import("@/data/courses/webtechnologies/html/session2") as Promise<{ default: SessionData }>,
@@ -24,19 +13,18 @@ const SESSION_MAP: Record<string, () => Promise<{ default: SessionData }>> = {
   "html-session4": () => import("@/data/courses/webtechnologies/html/session4") as Promise<{ default: SessionData }>,
   "html-session5": () => import("@/data/courses/webtechnologies/html/session5") as Promise<{ default: SessionData }>,
   "html-session6": () => import("@/data/courses/webtechnologies/html/session6") as Promise<{ default: SessionData }>,
-  // Uncomment as you create data files:
   "css-session7":  () => import("@/data/courses/webtechnologies/css/session7")  as Promise<{ default: SessionData }>,
-  "css-session8": () => import("@/data/courses/webtechnologies/css/session8") as Promise<{ default: SessionData }>,
-  "css-session9": () => import("@/data/courses/webtechnologies/css/session9") as Promise<{ default: SessionData }>,
+  "css-session8":  () => import("@/data/courses/webtechnologies/css/session8")  as Promise<{ default: SessionData }>,
+  "css-session9":  () => import("@/data/courses/webtechnologies/css/session9")  as Promise<{ default: SessionData }>,
   "css-session10": () => import("@/data/courses/webtechnologies/css/session10") as Promise<{ default: SessionData }>,
   "css-session11": () => import("@/data/courses/webtechnologies/css/session11") as Promise<{ default: SessionData }>,
   "css-session12": () => import("@/data/courses/webtechnologies/css/session12") as Promise<{ default: SessionData }>,
-  "js-session13": () => import("@/data/courses/webtechnologies/js/session13") as Promise<{ default: SessionData }>,
-  "js-session14": () => import("@/data/courses/webtechnologies/js/session14") as Promise<{ default: SessionData }>,
-  "js-session15": () => import("@/data/courses/webtechnologies/js/session15") as Promise<{ default: SessionData }>,
-  "js-session16": () => import("@/data/courses/webtechnologies/js/session16") as Promise<{ default: SessionData }>,
-  "js-session17": () => import("@/data/courses/webtechnologies/js/session17") as Promise<{ default: SessionData }>,
-  "js-session18": () => import("@/data/courses/webtechnologies/js/session18") as Promise<{ default: SessionData }>,
+  "js-session13":  () => import("@/data/courses/webtechnologies/js/session13")  as Promise<{ default: SessionData }>,
+  "js-session14":  () => import("@/data/courses/webtechnologies/js/session14")  as Promise<{ default: SessionData }>,
+  "js-session15":  () => import("@/data/courses/webtechnologies/js/session15")  as Promise<{ default: SessionData }>,
+  "js-session16":  () => import("@/data/courses/webtechnologies/js/session16")  as Promise<{ default: SessionData }>,
+  "js-session17":  () => import("@/data/courses/webtechnologies/js/session17")  as Promise<{ default: SessionData }>,
+  "js-session18":  () => import("@/data/courses/webtechnologies/js/session18")  as Promise<{ default: SessionData }>,
   "php-session19": () => import("@/data/courses/webtechnologies/php/session19") as Promise<{ default: SessionData }>,
 };
 
@@ -205,8 +193,6 @@ const TAB_LIST: { id: TabId; label: string; icon: string }[] = [
 export default function SessionPage() {
   const params = useParams();
 
-  // FIX 3: Never use `module` as a variable name in Next.js —
-  // it shadows the Node.js built-in. Use `moduleName` instead.
   const moduleName  = (params?.module  as string) ?? "";
   const sessionName = (params?.session as string) ?? "";
   const key = `${moduleName}-${sessionName}`;
@@ -217,18 +203,8 @@ export default function SessionPage() {
   const [activeDemo,  setActiveDemo] = useState(0);
   const [openTopic,   setOpenTopic]  = useState<string | null>(null);
 
-  // ─────────────────────────────────────────────────────────
-  //  FIX 4: No synchronous setState in the effect body.
-  //  - setLoading(true) was triggering a cascading re-render
-  //    because it ran synchronously before the effect resolved.
-  //  - Solution: initialise loading=true in useState (above),
-  //    and only call setState inside the async .then() or the
-  //    "no loader found" guard — never at the top of the body.
-  // ─────────────────────────────────────────────────────────
   useEffect(() => {
-    // Don't call setLoading(true) here — it causes cascade.
-    // loading is already true from the initial useState(true).
-    let cancelled = false; // prevent stale updates on fast nav
+    let cancelled = false;
 
     const loader = SESSION_MAP[key];
 
@@ -238,7 +214,6 @@ export default function SessionPage() {
       return;
     }
 
-    // Reset to loading state without triggering extra renders
     setData(null);
 
     loader()
@@ -257,7 +232,7 @@ export default function SessionPage() {
     return () => {
       cancelled = true;
     };
-  }, [key]); // only re-run when the URL key changes
+  }, [key]);
 
   // ── Loading ──────────────────────────────────────────────
   if (loading) {
@@ -294,13 +269,8 @@ export default function SessionPage() {
     );
   }
 
-  // FIX 1: `data` is guaranteed non-null past this point so
-  // destructuring and accessing meta.color is always safe.
-  // The previous version reached line 241 while data could
-  // still be null because the early returns were inside
-  // conditionals that TypeScript couldn't always narrow through.
   const { meta, topics, demos, exercises } = data;
-  const C    = meta.color;     // ✅ safe — data is not null
+  const C    = meta.color;
   const CDIM = meta.colorDim;
   const CMID = meta.colorMid;
   const currentDemo = demos[activeDemo] ?? demos[0];
@@ -315,7 +285,6 @@ export default function SessionPage() {
         <nav className="sp-bc">
           <Link href="/courses/webtechnologies">Web Technologies</Link>
           <span className="sp-bc-sep">/</span>
-          {/* FIX 3: using moduleName, not module */}
           <Link href={`/courses/webtechnologies/${moduleName}`}>
             {moduleName.toUpperCase()}
           </Link>
@@ -553,8 +522,17 @@ export default function SessionPage() {
 //  Styles
 // ─────────────────────────────────────────────────────────────
 const css = `
-  .sp-page { padding: 0 0 4rem; max-width: 860px; }
+  /* ── Page wrapper ── */
+  /* FIX: added min-width:0 and width:100% to prevent flex overflow,
+     which was the root cause of content bleeding off-screen on mobile */
+  .sp-page {
+    max-width: 860px;
+    min-width: 0;
+    width: 100%;
+    box-sizing: border-box;
+  }
 
+  /* ── Loading ── */
   .sp-loading {
     display: flex; align-items: center; gap: 0.75rem;
     padding: 4rem 0; color: var(--muted);
@@ -564,9 +542,11 @@ const css = `
     width: 20px; height: 20px; border-radius: 50%;
     border: 2px solid var(--border); border-top-color: var(--accent);
     animation: spSpin 0.7s linear infinite;
+    flex-shrink: 0;
   }
   @keyframes spSpin { to { transform: rotate(360deg); } }
 
+  /* ── Not found ── */
   .sp-notfound { padding: 4rem 0; text-align: center; color: var(--text); }
   .sp-404-icon { font-size: 3rem; margin-bottom: 1rem; }
   .sp-notfound h2 { font-size: 1.25rem; margin-bottom: 0.5rem; }
@@ -577,17 +557,20 @@ const css = `
   }
   .sp-back-link:hover { text-decoration: underline; }
 
+  /* ── Breadcrumb ── */
   .sp-bc {
     display: flex; align-items: center; gap: 0.4rem;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.62rem; color: var(--muted);
     text-transform: uppercase; letter-spacing: 0.08em;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap;
   }
   .sp-bc a { color: var(--muted); text-decoration: none; transition: color 0.15s; }
   .sp-bc a:hover { color: var(--text); }
   .sp-bc-sep { opacity: 0.4; }
 
+  /* ── Header ── */
   .sp-header {
     margin-bottom: 2rem; padding-bottom: 1.5rem;
     border-bottom: 1px solid var(--border);
@@ -617,6 +600,7 @@ const css = `
     border: 1px solid var(--border); border-radius: 20px; padding: 0.2rem 0.6rem;
   }
 
+  /* ── Tabs ── */
   .sp-tabs {
     display: flex; gap: 0.1rem; border-bottom: 1px solid var(--border);
     margin-bottom: 2rem; overflow-x: auto; scrollbar-width: none;
@@ -633,6 +617,7 @@ const css = `
   .sp-tab:hover { color: var(--text); }
   .sp-tab-on { font-weight: 700; }
 
+  /* ── Section ── */
   .sp-section { animation: spFade 0.3s ease both; }
   @keyframes spFade {
     from { opacity: 0; transform: translateY(10px); }
@@ -644,9 +629,10 @@ const css = `
     padding-left: 0.85rem; border-left: 3px solid; margin-bottom: 1.25rem;
   }
 
+  /* ── Objectives ── */
   .sp-obj-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
     gap: 0.65rem;
   }
   .sp-obj-card {
@@ -662,6 +648,7 @@ const css = `
   }
   .sp-obj-text { font-size: 0.8rem; color: var(--text2, var(--text)); line-height: 1.5; }
 
+  /* ── Accordion ── */
   .sp-accordion { display: flex; flex-direction: column; gap: 0.5rem; }
   .sp-acc-item {
     border-radius: 12px; border: 1px solid var(--border);
@@ -682,8 +669,15 @@ const css = `
     transition: transform 0.3s cubic-bezier(0.16,1,0.3,1);
   }
   .sp-chev-open { transform: rotate(180deg); }
-  .sp-acc-body { padding: 0 1.1rem 1.1rem; }
+  .sp-acc-body {
+    padding: 0 1.1rem 1.1rem;
+    /* FIX: prevent inner content from overflowing accordion width */
+    overflow: hidden;
+    min-width: 0;
+  }
 
+  /* ── Topic content ── */
+  .sp-topic { min-width: 0; }
   .sp-topic-content {
     font-size: 0.84rem; color: var(--muted); line-height: 1.75; margin-bottom: 1rem;
   }
@@ -698,9 +692,13 @@ const css = `
     color: #ca8a04; font-size: 0.78rem; line-height: 1.6; margin: 0.75rem 0 1rem;
   }
 
+  /* ── Code blocks ── */
   .sp-code-wrap {
     border-radius: 10px; overflow: hidden;
     border: 1px solid var(--border); margin: 0.75rem 0 1rem;
+    /* FIX: contain the code block within parent width */
+    max-width: 100%;
+    box-sizing: border-box;
   }
   .sp-code-header {
     display: flex; align-items: center; justify-content: space-between;
@@ -720,17 +718,25 @@ const css = `
     transition: color 0.15s, background 0.15s;
   }
   .sp-copy:hover { color: var(--text); background: var(--border); }
+  /* FIX: code must scroll horizontally, never push parent wider */
   .sp-code {
     background: #0d1117; color: #e6edf3; margin: 0;
     padding: 1rem 1.1rem; overflow-x: auto;
     font-family: 'JetBrains Mono', monospace; font-size: 0.75rem;
     line-height: 1.75; white-space: pre; tab-size: 2;
+    max-width: 100%;
+    box-sizing: border-box;
+    display: block;
   }
 
+  /* ── Definition list ── */
   .sp-defs { display: flex; flex-direction: column; gap: 0.65rem; margin: 0.75rem 0 1rem; }
   .sp-def-item {
     border-radius: 10px; border: 1px solid; border-left-width: 3px;
     background: var(--surface); padding: 0.9rem 1rem;
+    /* FIX: ensure definition items don't overflow */
+    min-width: 0;
+    box-sizing: border-box;
   }
   .sp-def-top {
     display: flex; align-items: center; gap: 0.65rem;
@@ -739,6 +745,8 @@ const css = `
   .sp-def-term {
     font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; font-weight: 700;
     padding: 0.15rem 0.55rem; border-radius: 6px;
+    /* FIX: long terms should wrap, not overflow */
+    word-break: break-all;
   }
   .sp-dep-badge {
     font-family: 'JetBrains Mono', monospace; font-size: 0.55rem;
@@ -753,9 +761,15 @@ const css = `
     font-family: 'JetBrains Mono', monospace; font-size: 0.68rem; margin-bottom: 0.5rem;
   }
 
+  /* ── Table ── */
+  /* FIX: table wrapper must scroll, not overflow the page */
   .sp-table-wrap {
     overflow-x: auto; margin: 0.75rem 0 1rem;
     border-radius: 10px; border: 1px solid var(--border);
+    max-width: 100%;
+    box-sizing: border-box;
+    /* Smooth scroll inertia on iOS */
+    -webkit-overflow-scrolling: touch;
   }
   .sp-table { width: 100%; border-collapse: collapse; font-size: 0.78rem; }
   .sp-th {
@@ -768,11 +782,13 @@ const css = `
   }
   .sp-tr-alt { background: var(--surface2, rgba(255,255,255,0.02)); }
 
+  /* ── Sub-sections ── */
   .sp-sub {
     margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border);
   }
   .sp-sub-h { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.5rem; }
 
+  /* ── Demo ── */
   .sp-demo-btns { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem; }
   .sp-demo-btn {
     padding: 0.45rem 0.85rem; border-radius: 8px;
@@ -794,16 +810,24 @@ const css = `
     font-family: 'JetBrains Mono', monospace; font-size: 0.62rem;
     font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase;
   }
+  /* FIX: demo output must scroll, not overflow */
   .sp-demo-output {
     padding: 1.25rem; min-height: 140px; color: var(--text); font-size: 0.85rem;
+    overflow-x: auto;
+    max-width: 100%;
+    box-sizing: border-box;
+    -webkit-overflow-scrolling: touch;
   }
 
+  /* ── Exercises ── */
   .sp-exercises { display: flex; flex-direction: column; gap: 1rem; }
   .sp-ex-card {
     border-radius: 12px; border: 1px solid var(--border); border-left-width: 4px;
     background: var(--surface); padding: 1.1rem 1.25rem;
+    min-width: 0;
+    box-sizing: border-box;
   }
-  .sp-ex-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+  .sp-ex-header { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; flex-wrap: wrap; }
   .sp-ex-num {
     font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 700;
     padding: 0.2rem 0.6rem; border-radius: 20px;
@@ -820,6 +844,7 @@ const css = `
     font-size: 0.75rem; font-family: 'JetBrains Mono', monospace; line-height: 1.6;
   }
 
+  /* ── Nav footer ── */
   .sp-nav-footer {
     display: flex; align-items: center; justify-content: space-between;
     padding-top: 2rem; margin-top: 2.5rem; border-top: 1px solid var(--border);
@@ -833,9 +858,25 @@ const css = `
     font-family: 'JetBrains Mono', monospace; font-size: 0.65rem; font-weight: 700;
     letter-spacing: 0.06em; text-transform: uppercase;
     transition: background 0.15s, border-color 0.15s;
+    white-space: nowrap;
   }
   .sp-nav-btn:hover { background: var(--surface2); }
   .sp-nav-btn-primary { border-color: transparent !important; }
 
-  @media (max-width: 640px) { .sp-page { padding: 0 0 3rem; } }
+  /* ── Mobile breakpoints ── */
+  @media (max-width: 640px) {
+    .sp-page { padding: 0 0 3rem; }
+
+    /* FIX: slightly smaller font for code on very small screens */
+    .sp-code { font-size: 0.68rem; padding: 0.85rem 0.9rem; }
+
+    /* FIX: reduce table cell padding on small screens */
+    .sp-th, .sp-td { padding: 0.5rem 0.6rem; font-size: 0.72rem; }
+
+    /* FIX: collapse objectives grid to single column */
+    .sp-obj-grid { grid-template-columns: 1fr; }
+
+    /* FIX: smaller tab labels */
+    .sp-tab { padding: 0.5rem 0.65rem; font-size: 0.6rem; }
+  }
 `;
