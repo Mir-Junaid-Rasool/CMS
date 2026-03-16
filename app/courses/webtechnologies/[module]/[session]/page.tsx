@@ -37,6 +37,7 @@ const SESSION_MAP: Record<string, () => Promise<{ default: SessionData }>> = {
   "js-session16": () => import("@/data/courses/webtechnologies/js/session16") as Promise<{ default: SessionData }>,
   "js-session17": () => import("@/data/courses/webtechnologies/js/session17") as Promise<{ default: SessionData }>,
   "js-session18": () => import("@/data/courses/webtechnologies/js/session18") as Promise<{ default: SessionData }>,
+  "php-session19": () => import("@/data/courses/webtechnologies/php/session19") as Promise<{ default: SessionData }>,
 };
 
 // ─────────────────────────────────────────────────────────────
